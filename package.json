@@ -1,0 +1,23 @@
+{
+  "name": "micro-image-transformations",
+  "version": "1.0.0",
+  "description": "Microlibrary for image transformations.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jshi22/micro-image-transformations.git"
+  },
+  "keywords": [
+    "image",
+    "transformations"
+  ],
+  "author": "Jimmy Shi <mshi18@jhu.edu> (https://github.com/jshi22)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jshi22/micro-image-transformations/issues"
+  },
+  "homepage": "https://github.com/jshi22/micro-image-transformations#readme"
+}
