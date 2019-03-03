@@ -8,6 +8,8 @@ An image processing microlibrary for Node and the web. Though I wrote this as a 
 Here is a link to a barebones demo website I put together:
 https://jshi22.github.io/image-processing-demo/
 
+The transformation JS functions are located in "src/index.js". Tests are in "tests/index.test.js"
+
 My Node package is published so you can download it and use it for your own projeects (installation steps below). The npm package is currently v3.0.0 as I had to publish a few times for testing purposes.
 
 ## Thank you Instrumental, your consideration means a lot to me. This project was an enjoyable learning experience!
@@ -66,7 +68,7 @@ Suppose this js file is src/image_handler.js
 Clone this repository! Submit your PR and Travis will run some tests to make sure it is compliant with current standards.
 
 ### Testing
-In the cloned repository, to run tests, run `npm test`. Current tests are written in mocha and chai, testing grayscale and crop functions.
+In the cloned repository, to run tests, run `npm test`. Current tests are written in mocha and chai in "tests/index.test.js", testing grayscale and crop functions.
 
 Note: eslint currently disabled due to some Travis complaints.
 ## License
