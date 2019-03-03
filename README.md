@@ -1,4 +1,5 @@
 # micro-image-transformations
+![travis build](https://api.travis-ci.com/jshi22/micro-image-transformations.svg?token=T8PthyzySUexzMRoGKqp&branch=master)
 
 An image processing micro library for Node and the web.
 
@@ -8,22 +9,29 @@ Since this is a small library, I will include the API usage in this doc.
 
 ## Supported Image Types
 
-- [jpeg](./packages/type-jpeg)
-- [png](./packages/type-png)
-- [tiff](./packages/type-tiff)
-- [bmp](./packages/type-bmp)
-- [gif](./packages/type-gif)
+- jpeg
+- png
+- tiff
+- bmp
+- gif
 
 ## Image Transformations Provided
 
-- [grayscale](./packages/plugin-blit) - Turn an image into grayscale (luminosity correction algorithm used as humans are more sensitive to green)
-- [crop](./packages/plugin-blur) - Crop an image.
+- [grayscale](./src/index.js) - Turn an image into grayscale (luminosity correction algorithm used as humans are more sensitive to green)
+- [crop](./src/index.js) - Crop an image.
 
 ## API
 
-- [grayscale](./packages/plugin-blit) - Turn an image into grayscale (luminosity correction algorithm used as humans are more sensitive to green)
-- [crop](./packages/plugin-blur) - Crop an image.
+Usage:<br>
+First make sure to include the library:<br>
+`const imageTransformLibrary = require('micro-image-transformations');`
 
+You can pass an HTML image element as an argument to a transformation function like so: <br>
+`let newImage=imageTransformLibrary.grayscale(img);` where `img` is an HTML img object.
+
+<br>Now you can do whatever you want with that new image object. Perhaps you want to render it on a canvas:<br>
+`const context = document.getElementById('image-display').getContext('2d');`
+`context.drawImage(newImage,0,0);`
 
 ## Contributing
 
