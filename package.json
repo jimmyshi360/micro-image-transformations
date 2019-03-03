@@ -4,6 +4,7 @@
   "description": "Microlibrary for image transformations.",
   "main": "src/index.js",
   "scripts": {
+    "pretest": "eslint --fix --ignore-path .gitignore .",
     "test": "mocha tests/index.test.js -w"
   },
   "repository": {
@@ -22,6 +23,9 @@
   "homepage": "https://github.com/jshi22/micro-image-transformations#readme",
   "devDependencies": {
     "chai": "4.2.0",
+    "eslint": "5.15.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.16.0",
     "mocha": "6.0.2"
   },
   "dependencies": {
