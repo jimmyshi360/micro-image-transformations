@@ -1,6 +1,6 @@
 {
   "name": "micro-image-transformations",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "Microlibrary for image transformations.",
   "main": "src/index.js",
   "scripts": {
@@ -38,8 +38,5 @@
   "dependencies": {
     "canvas": "2.3.1",
     "jsdom": "13.2.0"
-  },
-  "publishConfig": {
-    "access": "restricted"
   }
 }

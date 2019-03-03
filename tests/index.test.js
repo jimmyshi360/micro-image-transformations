@@ -1,3 +1,10 @@
+/*
+  Author: Jimmy Shi
+  Testing suite for unittesting image transform functions.
+  We use Base64 to encode test images compactly.
+  Use an online decoder to see the image for each test case.
+*/
+
 const { expect } = require('chai');
 const Canvas = require('canvas');
 const { describe, it } = require('mocha');
@@ -214,6 +221,23 @@ describe('micro-image-transformations', () => {
         const smallerOutput = imageTransformations.crop(img, 0, 0, 5, 5);
         expect(smallerOutput.width).to.equal(5);
         expect(smallerOutput.height).to.equal(5);
+      });
+
+    /** simple cropping test to see that cropping works.
+     *  takes a 2x2 square, with bottom left corner completely black.
+     *  all other pixels are white. Crops the bottom left quarter.
+     *  Therefore the output should be a 1x1 black square* */
+    it('should crop pixels properly',
+      () => {
+        const img = new Image();
+        // 2x2 test image
+        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGD4DwABBAEAfbLI3wAAAABJRU5ErkJggg==';
+        const target = new Image();
+        // 1x1 black square
+        target.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2NgYGD4DwABBAEAcCBlCwAAAABJRU5ErkJggg==';
+        const output = imageTransformations.crop(img, 0, 0, 1, 1);
+
+        expect(imageDiff(output, target)).to.equal(true);
       });
   });
 });

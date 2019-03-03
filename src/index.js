@@ -1,8 +1,16 @@
+/*
+  Author: Jimmy Shi
+  Microlibrary for image transformations. Includes grayscale and crop
+*/
+
 module.exports = {
 
-  /** Accepts an Image object and returns the modified grayscale version of the image.
-     Uses the luminosity method by doing 0.21 R + 0.72 G + 0.07 B on each pixel(It looks nicer!).
-     * */
+  /**
+   * Accepts an Image object and returns the modified grayscale version of the image.
+   Uses the luminosity method by doing 0.21 R + 0.72 G + 0.07 B on each pixel.
+   * @param  {Image()} arg1 standard HTML image object
+   * @return {Image()}      returns the grayscaled image
+   */
   grayscale(image) {
     // uses the canvas method for manipulating images
     if (image.width === 0 || image.height === 0) {
@@ -41,9 +49,16 @@ module.exports = {
     return output;
   },
 
-  /** Crops an image. cropX and cropY specify the bottom left corner to begin cropping
-     cropW is the width to crop and cropH is the height to crop.
-     * */
+  /**
+   * Accepts an Image object and returns the modified cropped version of the image.
+   * Operates on Cartesian coordinates, bottom left of image is (0,0).
+   * @param  {Image()} arg1 standard HTML image object
+   * @param  {Number} arg2 Integer representing start X coordinate
+   * @param  {Number} arg3 Integer representing start Y coordinate
+   * @param  {Number} arg4 Integer representing crop width
+   * @param  {Number} arg5 Integer represeting crop Height
+   * @return {Image()}      returns the cropped image
+   */
   crop(image, startX, startY, cropWidth, cropHeight) {
     if (image.width === 0 || image.height === 0) {
       throw new Error('cannot process empty image');
