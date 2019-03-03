@@ -1,11 +1,11 @@
 {
   "name": "micro-image-transformations",
-  "version": "0.0.0-development",
+  "version": "0.0.0-semantically-released",
   "description": "Microlibrary for image transformations.",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha tests/index.test.js -w",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
