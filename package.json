@@ -4,7 +4,6 @@
   "description": "Microlibrary for image transformations.",
   "main": "src/index.js",
   "scripts": {
-    "pretest": "eslint --fix --ignore-path .gitignore .",
     "test": "mocha tests/index.test.js -w",
     "semantic-release": "semantic-release"
   },
