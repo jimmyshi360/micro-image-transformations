@@ -1,6 +1,6 @@
 {
   "name": "micro-image-transformations",
-  "version": "0.0.0-semantically-released",
+  "version": "2.3.0",
   "description": "Microlibrary for image transformations.",
   "main": "src/index.js",
   "scripts": {
