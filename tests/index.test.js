@@ -2,13 +2,63 @@ let expect = require('chai').expect;
 let imageTransformations = require('../src/index');
 let Canvas = require("canvas");
 global.Image = Canvas.Image;
-const { JSDOM } = require('jsdom');
+const {
+	JSDOM
+} = require('jsdom');
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = jsdom;
+const {
+	window
+} = jsdom;
 
 
 global.window = window;
 global.document = window.document;
+
+// Utility function for diffing images
+//image diff is necessary as directly comparing Base64 is unreliable due to varying encoding schemes
+function imageDiff (img1, img2) {
+
+	let canvas1 = document.createElement('canvas');
+	let canvasContext1 = canvas1.getContext('2d');
+
+	let canvas2 = document.createElement('canvas');
+	let canvasContext2 = canvas2.getContext('2d');
+
+	let imgWidth1 = img1.width;
+	let imgHeight1 = img1.height;
+
+	let imgWidth2 = img2.width;
+	let imgHeight2 = img2.height;
+
+	canvas1.width = imgWidth1;
+	canvas1.height = imgHeight1;
+
+	canvas2.width = imgWidth2;
+	canvas2.height = imgHeight2;
+
+	canvasContext1.drawImage(img1, 0, 0);
+	canvasContext2.drawImage(img2, 0, 0);
+
+	let pixelGrid1 = canvasContext1.getImageData(0, 0, imgWidth1, imgHeight1);
+	let pixelGrid2 = canvasContext2.getImageData(0, 0, imgWidth2, imgHeight2);
+
+	for (y = 0; y < pixelGrid1.height; y++) {
+		for (x = 0; x < pixelGrid1.width; x++) {
+
+			let i = (y * 4) * pixelGrid1.width + x * 4;
+
+			//no pixels should be red
+			if (pixelGrid1.data[i] !== pixelGrid2.data[i])
+				return false;
+			if (pixelGrid1.data[i + 1] !== pixelGrid2.data[i + 1])
+				return false;
+			if (pixelGrid1.data[i + 2] !== pixelGrid2.data[i + 2])
+				return false;
+		}
+	}
+	return true;
+
+};
 
 describe('micro-image-transformations', function () {
 
@@ -18,7 +68,7 @@ describe('micro-image-transformations', function () {
 		//grayscale does not always change all pixels but it should still operate over all of them
 		it('should update/check all pixels', function () {
 
-			let imageDiff = (img) => {
+			let imageNotRed = (img) => {
 
 				let canvas = document.createElement('canvas');
 				let canvasContext = canvas.getContext('2d');
@@ -54,7 +104,7 @@ describe('micro-image-transformations', function () {
 			redSquare.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
 
 			let grayscaleIMG = imageTransformations.grayscale(redSquare);
-			expect(imageDiff(grayscaleIMG)).to.equal(true);
+			expect(imageNotRed(grayscaleIMG)).to.equal(true);
 
 		});
 
@@ -84,16 +134,16 @@ describe('micro-image-transformations', function () {
 		});
 
 		//optional test, assuming same grayscale logic is used. tests that the luminosity equation is accurate
-        		it('(OPTIONAL) should calculate correct grayscale luminosity', function () {
+		it('(OPTIONAL) should calculate correct grayscale luminosity', function () {
 
-        			let img = new Image();
-        			//preload a (255, 0, 0) rgb red 16x16 square.
-                    img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
-                    let targetImage=new Image();
-                    //preload the expected 16x16 image based on the luminosity equation
-                    targetImage.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2M0MzP7z0ABYBw1gGE0DBhGw4BhWIQBABVoGiEEEj37AAAAAElFTkSuQmCC';
-                    console.log(imageTransformations.grayscale(img).src);
-        			expect(imageTransformations.grayscale(img).src).to.equal(targetImage.src);
-        		});
+			let img = new Image();
+			//preload a (255, 0, 0) rgb red 1x1 square.
+			img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==';
+			let targetImage = new Image();
+			//preload the expected 1x1 image based on the luminosity equation
+			targetImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2MwMzP7DwAC6gGi4bvgyAAAAABJRU5ErkJggg==';
+			console.log(imageTransformations.grayscale(img).src);
+			expect(imageDiff(imageTransformations.grayscale(img), targetImage)).to.equal(true);
+		});
 	})
 });

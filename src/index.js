@@ -47,9 +47,10 @@ module.exports = {
                            //uses the canvas method for manipulating images
         	let canvas = document.createElement('canvas');
         	let canvasContext = canvas.getContext('2d');
-            cropY=imgHeight-cropY;
+
         	let imgWidth = image.width;
         	let imgHeight = image.height;
+        	cropY=imgHeight-cropY;
         	if(imgWidth ===0 || imgHeight ===0)
         	    throw "cannot process empty image";
         	canvas.width = imgWidth;
@@ -67,7 +68,7 @@ module.exports = {
         		    //calculate pixel index to manipulate
         		    //We multiply by 4 because pixel data is stored (r,g,b,a) so we traverse 4 blocks at a time
         			let i = (y * 4) * pixelGrid.width + x * 4;
-					let cropI = ((y-cropY) * 4) * cropW + (x-cropX) * 4;
+					let cropI = ((y-cropY+cropH) * 4) * cropW + (x-cropX) * 4;
         			//average values based on the luminosity equation
         			pixelGridCropped.data[cropI] = pixelGrid.data[i];
         			pixelGridCropped.data[cropI + 1] = pixelGrid.data[i+1];
