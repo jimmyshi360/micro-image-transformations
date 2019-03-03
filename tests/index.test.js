@@ -13,13 +13,13 @@ const {
   window,
 } = jsdom;
 
-
+// initialize virtual dom for testing
 global.window = window;
 global.document = window.document;
 
-// Utility function for diffing images
-// image diff is necessary as
-// directly comparing Base64 is unreliable due to varying encoding schemes
+/** Utility function for diffing images
+   image diff is necessary as
+   directly comparing Base64 is unreliable due to varying encoding schemes * */
 function imageDiff(img1, img2) {
   const canvas1 = document.createElement('canvas');
   const canvasContext1 = canvas1.getContext('2d');
@@ -60,8 +60,9 @@ function imageDiff(img1, img2) {
 
 describe('micro-image-transformations', () => {
   describe('grayscale', () => {
-    // uses a red square to check that all pixels are updated,
-    // grayscale does not always change all pixels but it should still operate over all of them
+    /** uses a red square to check that all pixels are updated,
+       output should no longer be a red square.
+       grayscale does not always change all pixels but it should still operate over all of them * */
     it('should update/check all pixels', () => {
       const imageNotRed = (img) => {
         const canvas = document.createElement('canvas');
@@ -111,17 +112,16 @@ describe('micro-image-transformations', () => {
       }
     });
 
-    // tests the precondition that empty image objects
-    // should result in an exception being thrown (width or height of 0)
+    /** tests the precondition that empty image objects
+       should result in an exception being thrown (width and/or height of 0)* */
     it('should gracefully handle empty images', () => {
+      // initiliaze empty image
       const img = new Image();
-      // preload a (255, 0, 0) rgb red 1x1 square.
-      // Grayscale should change all pixels to another color
       expect(() => imageTransformations.grayscale(img)).to.throw('cannot process empty image');
     });
 
-    // optional test, assuming same grayscale logic is used.
-    // tests that the luminosity equation is accurate
+    /** optional test, assuming same grayscale logic is used.
+       tests that the luminosity equation is accurate * */
     it('(OPTIONAL) should calculate correct grayscale luminosity', () => {
       const img = new Image();
       // preload a (255, 0, 0) rgb red 1x1 square.
@@ -131,5 +131,89 @@ describe('micro-image-transformations', () => {
       targetImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2MwMzP7DwAC6gGi4bvgyAAAAABJRU5ErkJggg==';
       expect(imageDiff(imageTransformations.grayscale(img), targetImage)).to.equal(true);
     });
+  });
+
+  describe('crop', () => {
+    /** tests the precondition that empty image objects
+       should result in an exception being thrown (width and/or height of 0)* */
+    it('should gracefully handle empty images', () => {
+      // initialize empty image
+      const img = new Image();
+      expect(() => imageTransformations.crop(img, 0, 0, 2, 2)).to.throw('cannot process empty image');
+    });
+
+    /** tests the precondition that startX and startY for
+     cropping cannot exceed the image height or width
+     should result in an exception being thrown* */
+    it('should not accept starting coordinates outside of image dimensions (too large)', () => {
+      // initialize empty image
+      const img = new Image();
+      // preload 16x16 dimension image
+      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+      expect(() => imageTransformations.crop(img, 17, 17, 2, 2)).to.throw('starting coordinates out of bounds');
+    });
+
+    /** tests the precondition that startX and startY for
+        cropping cannot be negative, should result in exception being thrown * */
+    it('should not accept starting coordinates outside of image dimensions (too small)', () => {
+    // initialize empty image
+      const img = new Image();
+      // preload 16x16 dimension image
+      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+      expect(() => imageTransformations.crop(img, -1, -1, 2, 2)).to.throw('starting coordinates out of bounds');
+    });
+
+    it('should execute properly for valid inputs',
+      () => {
+        const img = new Image();
+        // preload 16x16 dimension image
+        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+
+        // if try results in exception, then we have a failure
+        try {
+          imageTransformations.crop(img, 2, 2, 2, 2);
+          expect(true).to.equal(true);
+        } catch (e) {
+          expect(false).to.equal(true);
+        }
+      });
+
+    it('should only accept positive cropWidth and cropHeight',
+      () => {
+        const img = new Image();
+        // preload 16x16 dimension image
+        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+
+        expect(() => imageTransformations.crop(img, 2, 2, -1, -1)).to.throw('crop height and width must be positive');
+      });
+
+    /** if startX + cropWidth exceeds the width of the image,
+        or startY + cropHeight exceeds the height of the images,
+     then we get an out of bounds problem * */
+    it('should accept crop dimensions that stay in bounds based on starting coordinates',
+      () => {
+        const img = new Image();
+        // preload 16x16 dimension image
+        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+
+        expect(() => imageTransformations.crop(img, 2, 2, 15, 15)).to.throw('crop dimensions must stay in bounds');
+      });
+
+    /** cropping dimmensions should equal cropWidth and cropHeight * */
+    it('cropping output has expected new dimensions ',
+      () => {
+        const img = new Image();
+        // preload 16x16 dimension image
+        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+
+        // test two different outputs
+        const output = imageTransformations.crop(img, 2, 2, 14, 14);
+        expect(output.width).to.equal(14);
+        expect(output.height).to.equal(14);
+
+        const smallerOutput = imageTransformations.crop(img, 0, 0, 5, 5);
+        expect(smallerOutput.width).to.equal(5);
+        expect(smallerOutput.height).to.equal(5);
+      });
   });
 });

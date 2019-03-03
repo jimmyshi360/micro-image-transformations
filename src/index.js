@@ -5,14 +5,15 @@ module.exports = {
      * */
   grayscale(image) {
     // uses the canvas method for manipulating images
+    if (image.width === 0 || image.height === 0) {
+      throw new Error('cannot process empty image');
+    }
     const canvas = document.createElement('canvas');
     const canvasContext = canvas.getContext('2d');
 
     const imgWidth = image.width;
     const imgHeight = image.height;
-    if (imgWidth === 0 || imgHeight === 0) {
-      throw new Error('cannot process empty image');
-    }
+
     canvas.width = imgWidth;
     canvas.height = imgHeight;
 
@@ -44,6 +45,24 @@ module.exports = {
      cropW is the width to crop and cropH is the height to crop.
      * */
   crop(image, startX, startY, cropWidth, cropHeight) {
+    if (image.width === 0 || image.height === 0) {
+      throw new Error('cannot process empty image');
+    }
+
+    if (startX > image.width || startY > image.height) {
+      throw new Error('starting coordinates out of bounds');
+    }
+    if (startX < 0 || startY < 0) {
+      throw new Error('starting coordinates out of bounds');
+    }
+    if (cropWidth <= 0 || cropHeight <= 0) {
+      throw new Error('crop height and width must be positive');
+    }
+
+    if (startX + cropWidth > image.width || startY + cropHeight > image.height) {
+      throw new Error('crop dimensions must stay in bounds');
+    }
+
     // uses the canvas method for manipulating images
     const canvas = document.createElement('canvas');
     const canvasContext = canvas.getContext('2d');
@@ -54,9 +73,7 @@ module.exports = {
     const cropY = imgHeight - startY;
     const cropW = cropWidth;
     const cropH = cropHeight;
-    if (imgWidth === 0 || imgHeight === 0) {
-      throw new Error('cannot process empty image');
-    }
+
     canvas.width = imgWidth;
     canvas.height = imgHeight;
 

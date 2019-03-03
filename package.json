@@ -1,15 +1,16 @@
 {
   "name": "micro-image-transformations",
-  "version": "2.3.0",
+  "version": "0.0.0-development",
   "description": "Microlibrary for image transformations.",
   "main": "src/index.js",
   "scripts": {
     "pretest": "eslint --fix --ignore-path .gitignore .",
-    "test": "mocha tests/index.test.js -w"
+    "test": "mocha tests/index.test.js -w",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jshi22/micro-image-transformations.git"
+    "url": "https://github.com/jshi22/micro-image-transformations.git"
   },
   "keywords": [
     "image",
@@ -26,10 +27,14 @@
     "eslint": "5.15.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.16.0",
-    "mocha": "6.0.2"
+    "mocha": "6.0.2",
+    "semantic-release": "^15.13.3"
   },
   "dependencies": {
     "canvas": "2.3.1",
     "jsdom": "13.2.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
