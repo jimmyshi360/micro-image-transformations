@@ -5,8 +5,8 @@
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)<br>
 An image processing microlibrary for Node and the web. Though I wrote this as a Node packages, I am targetting the web, for users who would like to modify web images.
 <br> Unittests are written in mocha and chai <br><br>
-Here is a link to a demo website I put together:
-[pending]
+Here is a link to a barebones demo website I put together:
+https://jshi22.github.io/image-processing-demo/
 
 The npm package is currently v3.0.0 as I had to publish a few times for testing purposes.
 
