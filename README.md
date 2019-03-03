@@ -8,7 +8,7 @@ An image processing microlibrary for Node and the web. Though I wrote this as a 
 Here is a link to a barebones demo website I put together:
 https://jshi22.github.io/image-processing-demo/
 
-The npm package is currently v3.0.0 as I had to publish a few times for testing purposes.
+My Node package is published so you can download it and use it for your own projeects (installation steps below). The npm package is currently v3.0.0 as I had to publish a few times for testing purposes.
 
 ## Thank you Instrumental, your consideration means a lot to me. This project was an enjoyable learning experience!
 
