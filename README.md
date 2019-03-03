@@ -1,6 +1,8 @@
+
+![](https://i.imgur.com/lSuYdgF.png)
 # micro-image-transformations (v1.0.0)
 ![travis build](https://api.travis-ci.com/jshi22/micro-image-transformations.svg?token=T8PthyzySUexzMRoGKqp&branch=master)
-
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)<br>
 An image processing microlibrary for Node and the web. Though I wrote this as a Node packages, I am targetting the web, for users who would like to modify web images.
 
 Here is a link to an example demo website that uses these transformations:
@@ -10,7 +12,7 @@ Here is a link to an example demo website that uses these transformations:
 
 `npm install --save micro-image-transformations`
 
-###Example Usage
+### Example Usage
 
 ```js 
   //include the 
