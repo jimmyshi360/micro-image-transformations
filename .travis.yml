@@ -2,6 +2,5 @@ before_script: chmod 0777 ./node_modules/.bin/mocha
 sudo: false
 language: node_js
 node_js:
-  - "iojs"
-  - "7"
+  - "stable"
 cache: npm
