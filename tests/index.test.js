@@ -2,7 +2,6 @@ let expect = require('chai').expect;
 let imageTransformations = require('../src/index');
 let Canvas = require("canvas");
 global.Image = Canvas.Image;
-var fs = require("fs");
 const { JSDOM } = require('jsdom');
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
@@ -17,7 +16,7 @@ describe('micro-image-transformations', function () {
 
 		//uses a red square to check that all pixels are updated,
 		//grayscale does not always change all pixels but it should still operate over all of them
-		it('should update all pixels', function () {
+		it('should update/check all pixels', function () {
 
 			let imageDiff = (img) => {
 
@@ -93,7 +92,7 @@ describe('micro-image-transformations', function () {
                     let targetImage=new Image();
                     //preload the expected 16x16 image based on the luminosity equation
                     targetImage.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHklEQVQ4T2M0MzP7z0ABYBw1gGE0DBhGw4BhWIQBABVoGiEEEj37AAAAAElFTkSuQmCC';
-
+                    console.log(imageTransformations.grayscale(img).src);
         			expect(imageTransformations.grayscale(img).src).to.equal(targetImage.src);
         		});
 	})
