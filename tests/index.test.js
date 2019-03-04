@@ -19,6 +19,8 @@ const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const {
   window,
 } = jsdom;
+const redSquare16by16 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+const redSquare1by1 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==';
 
 // initialize virtual dom for testing
 global.window = window;
@@ -99,7 +101,7 @@ describe('micro-image-transformations', () => {
       const redSquare = new Image();
       // preload a (255, 0, 0) rgb red 16x16 square.
       // Grayscale should change all pixels to another color
-      redSquare.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+      redSquare.src = redSquare16by16;
 
       const grayscaleIMG = imageTransformations.grayscale(redSquare);
       expect(imageNotRed(grayscaleIMG)).to.equal(true);
@@ -110,7 +112,7 @@ describe('micro-image-transformations', () => {
       const img = new Image();
       // preload a (255, 0, 0) rgb red 1x1 square.
       // Grayscale should change all pixels to another color
-      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==';
+      img.src = redSquare1by1;
       try {
         imageTransformations.grayscale(img);
         expect(true).to.equal(true);
@@ -132,7 +134,7 @@ describe('micro-image-transformations', () => {
     it('(OPTIONAL) should calculate correct grayscale luminosity', () => {
       const img = new Image();
       // preload a (255, 0, 0) rgb red 1x1 square.
-      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWP4z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==';
+      img.src = redSquare1by1;
       const targetImage = new Image();
       // preload the expected 1x1 image based on the luminosity equation
       targetImage.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2MwMzP7DwAC6gGi4bvgyAAAAABJRU5ErkJggg==';
@@ -156,7 +158,7 @@ describe('micro-image-transformations', () => {
       // initialize empty image
       const img = new Image();
       // preload 16x16 dimension image
-      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+      img.src = redSquare16by16;
       expect(() => imageTransformations.crop(img, 17, 17, 2, 2)).to.throw('starting coordinates out of bounds');
     });
 
@@ -166,7 +168,7 @@ describe('micro-image-transformations', () => {
     // initialize empty image
       const img = new Image();
       // preload 16x16 dimension image
-      img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+      img.src = redSquare16by16;
       expect(() => imageTransformations.crop(img, -1, -1, 2, 2)).to.throw('starting coordinates out of bounds');
     });
 
@@ -174,7 +176,7 @@ describe('micro-image-transformations', () => {
       () => {
         const img = new Image();
         // preload 16x16 dimension image
-        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+        img.src = redSquare16by16;
 
         // if try results in exception, then we have a failure
         try {
@@ -189,7 +191,7 @@ describe('micro-image-transformations', () => {
       () => {
         const img = new Image();
         // preload 16x16 dimension image
-        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+        img.src = redSquare16by16;
 
         expect(() => imageTransformations.crop(img, 2, 2, -1, -1)).to.throw('crop height and width must be positive');
       });
@@ -201,7 +203,7 @@ describe('micro-image-transformations', () => {
       () => {
         const img = new Image();
         // preload 16x16 dimension image
-        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+        img.src = redSquare16by16;
 
         expect(() => imageTransformations.crop(img, 2, 2, 15, 15)).to.throw('crop dimensions must stay in bounds');
       });
@@ -211,7 +213,7 @@ describe('micro-image-transformations', () => {
       () => {
         const img = new Image();
         // preload 16x16 dimension image
-        img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWP8z8Dwn4ECwESJ5lEDRg0YNWAwGQAAWG0CHpmX3bgAAAAASUVORK5CYII=';
+        img.src = redSquare16by16;
 
         // test two different outputs
         const output = imageTransformations.crop(img, 2, 2, 14, 14);
