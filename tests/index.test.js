@@ -25,10 +25,15 @@ const redSquare1by1 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAY
 // initialize virtual dom for testing
 global.window = window;
 global.document = window.document;
-
-/** Utility function for diffing images
-   image diff is necessary as
-   directly comparing Base64 is unreliable due to varying encoding schemes * */
+ 
+/**
+   * Utility function for diffing images
+   * image diff is necessary as
+   * directly comparing Base64 is unreliable due to varying encoding schemes.
+   * @param  {Image()} arg1 standard HTML image object
+   * @param  {Image()} arg2 standard HTML image object
+   * @return {Boolean}      returns true if the images have exactly the same RGBA values.
+   */   
 function imageDiff(img1, img2) {
   const canvas1 = document.createElement('canvas');
   const canvasContext1 = canvas1.getContext('2d');
