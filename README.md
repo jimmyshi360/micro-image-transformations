@@ -3,7 +3,7 @@
 # micro-image-transformations (v1.0.0)
 ![travis build](https://api.travis-ci.com/jshi22/micro-image-transformations.svg?token=T8PthyzySUexzMRoGKqp&branch=master)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)<br>
-An image processing microlibrary for Node and the web. Though I wrote this as a Node packages, I am targetting the web, for users who would like to modify web images.
+An image processing microlibrary for Node and the web. Though I wrote this as a Node package, I am targetting the web, for users who would like to modify web images.
 <br> Unittests are written in mocha and chai <br><br>
 Here is a link to a barebones demo website I put together:
 https://jshi22.github.io/image-processing-demo/
