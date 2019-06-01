@@ -1,7 +1,7 @@
 
 ![](https://i.imgur.com/lSuYdgF.png)
 # micro-image-transformations (v1.0.0)
-![travis build](https://api.travis-ci.com/jshi22/micro-image-transformations.svg?token=T8PthyzySUexzMRoGKqp&branch=master)
+![travis build](https://api.travis-ci.com/jimmyshi360/micro-image-transformations.svg?token=T8PthyzySUexzMRoGKqp&branch=master)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)<br>
 An image processing microlibrary for Node and the web. Though I wrote this as a Node package, I am targetting the web, for users who would like to modify web images. (If I were to make it backend only without reliance on Canvas, I'd use a library like jimp or pngjs)
 <br> Unittests are written in mocha and chai <br><br>
