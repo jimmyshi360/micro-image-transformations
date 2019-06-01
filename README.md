@@ -6,7 +6,7 @@
 An image processing microlibrary for Node and the web. Though I wrote this as a Node package, I am targetting the web, for users who would like to modify web images. (If I were to make it backend only without reliance on Canvas, I'd use a library like jimp or pngjs)
 <br> Unittests are written in mocha and chai <br><br>
 Here is a link to a barebones demo website I put together:
-https://jshi22.github.io/image-processing-demo/
+https://jimmyshi360.github.io/image-processing-demo/
 
 The transformation JS functions are located in "src/index.js". Tests are in "tests/index.test.js"
 
